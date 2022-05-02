@@ -1,0 +1,18 @@
+#!/bin/bash
+#SBATCH --job-name=M-BERT-QA-newsplit-v1-FIN100-test-eval
+#SBATCH --account=project_2001403
+#SBATCH --partition=gpu
+#SBATCH --time=10:00:00
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=10
+#SBATCH --mem-per-cpu=8000
+#SBATCH --gres=gpu:v100:1
+#SBATCH --mail-user=ilmari.kylliainen@helsinki.fi
+#SBATCH --output=M-BERT-QA-newsplit-v1-FIN100-test-eval.log
+#SBATCH --mail-type=BEGIN,END,FAIL
+
+module purge
+
+module load pytorch/1.9
+
+srun python ../output_model_predictions.py /scratch/project_2001403/ilmariky/M-BERT-QA_newsplit-v1-cp-epoch-2 ../../../datasets/100_fin_questions.json --batch_size 16 --out_file M-BERT-QA-newsplit-v1-FIN100-test-eval_predictions.json

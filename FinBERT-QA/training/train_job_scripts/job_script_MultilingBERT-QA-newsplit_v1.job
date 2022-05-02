@@ -1,0 +1,18 @@
+#!/bin/bash
+#SBATCH --job-name=M-BERT-QA_newsplit-v1
+#SBATCH --account=project_2001403
+#SBATCH --partition=gpu
+#SBATCH --time=42:00:00
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=10
+#SBATCH --mem-per-cpu=16000
+#SBATCH --gres=gpu:v100:2
+#SBATCH --mail-user=ilmari.kylliainen@helsinki.fi
+#SBATCH --output=M-BERT-QA_newsplit-v1.log
+#SBATCH --mail-type=BEGIN,END,FAIL
+
+module purge
+
+module load pytorch/1.9
+
+srun python ../finetune_m-bert_qa_model_new_split.py --epochs 8 --batch_size 16 --save_path /scratch/project_2001403/ilmariky/M-BERT-QA_newsplit-v1

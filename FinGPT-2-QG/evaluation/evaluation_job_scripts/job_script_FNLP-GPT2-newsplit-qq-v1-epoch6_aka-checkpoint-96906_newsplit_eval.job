@@ -1,0 +1,20 @@
+#!/bin/bash
+#SBATCH --job-name=FNLP-GPT2-newsplit-qq-v5-epoch6_aka-checkpoint-96906_newsplit_eval
+#SBATCH --account=project_2001403
+#SBATCH --partition=gpu
+#SBATCH --time=10:00:00
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=10
+#SBATCH --mem-per-cpu=8000
+#SBATCH --gres=gpu:v100:1
+#SBATCH --mail-user=ilmari.kylliainen@helsinki.fi
+#SBATCH --output=FNLP-GPT2-newsplit-qq-v1-epoch6_aka-checkpoint-96906-eval.log
+#SBATCH --mail-type=BEGIN,END,FAIL
+
+module purge
+
+module load pytorch/1.9
+
+srun python ../output_gpt-qg-model_predictions.py /scratch/project_2001403/ilmariky/FNLP-prompt_model_6_epochs/checkpoint-96906 --data_file ../../../datasets/qg_test_split-4822.json
+
+# srun python ../output_gpt-qg-model_predictions.py ../../FNLP-GPT2-newsplit-qq-v1-epoch5_aka-checkpoint-96906 --data_file ../../../datasets/qg_test_split-4822.json
